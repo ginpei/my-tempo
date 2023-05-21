@@ -7,12 +7,12 @@ const dummyPosts = [
   createPost({
     id: "1",
     body: "This is my first post",
-    createdAt: Date.now(),
+    createdAt: new Date("2022-02-22 22:22:22").getTime(),
   }),
   createPost({
     id: "2",
     body: "This is my second post",
-    createdAt: Date.now(),
+    createdAt: new Date("2022-02-22 22:22:22").getTime(),
   }),
 ];
 
