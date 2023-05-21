@@ -24,9 +24,12 @@ export function PostsSection({ userId }: PostsSectionProps): JSX.Element {
           <div key={post.id} className="Post border">
             <div>{post.body}</div>
             <div>
-              <time className="text-sm text-gray-400">
-                {new Date(post.createdAt).toISOString()}
-              </time>
+              {/* TODO path */}
+              <a className="hover:underline" href={`/posts/${post.id}`}>
+                <time className="text-sm text-gray-400">
+                  {new Date(post.createdAt).toISOString()}
+                </time>
+              </a>
             </div>
           </div>
         ))

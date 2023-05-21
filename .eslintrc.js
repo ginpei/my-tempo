@@ -19,6 +19,10 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint", "prettier"],
   rules: {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { ignoreRestSiblings: true },
+    ],
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
   },
