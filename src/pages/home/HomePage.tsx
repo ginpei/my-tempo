@@ -1,11 +1,23 @@
+import dynamic from "next/dynamic";
 import Head from "next/head";
-import { AuthForm } from "../../lib/auth/AuthForm";
+import { useCurrentUser } from "../../lib/auth/currentUserHooks";
+import { auth } from "../../lib/firebase/instances";
 import { VStack } from "../../lib/layout/VStack";
 
 export interface HomePageProps {
 }
 
+// to access localStorage in rendering
+const AuthForm = dynamic(
+  () => import("../../lib/auth/AuthForm").then((mod) => mod.AuthForm),
+  {
+    ssr: false,
+  }
+);
+
 export function HomePage({}: HomePageProps): JSX.Element {
+  const [user] = useCurrentUser(auth);
+
   return (
     <div className="HomePage p-4">
       <Head>
@@ -16,6 +28,9 @@ export function HomePage({}: HomePageProps): JSX.Element {
 
       <VStack>
         <h1 className="text-3xl font-bold">My Tempo</h1>
+        <p>
+      [user: {user?.uid ?? "none"}]
+        </p>
         <AuthForm />
       </VStack>
     </div>
