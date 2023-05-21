@@ -5,4 +5,4 @@ export interface StackProps {
   gap?: `gap-${number}`;
 }
 
-export type StackElementType = "div" | "span" | "article" | "label";
+export type StackElementType = "div" | "span" | "article" | "section" | "label";

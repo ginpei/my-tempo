@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useCurrentUser } from "../../lib/auth/currentUserHooks";
 import { auth } from "../../lib/firebase/instances";
 import { VStack } from "../../lib/layout/VStack";
+import { Link } from "../../lib/style/Link";
 
 // to access localStorage in rendering
 const AuthForm = dynamic(
@@ -25,6 +26,11 @@ export function HomePage(): JSX.Element {
 
       <VStack>
         <h1 className="text-3xl font-bold">My Tempo</h1>
+        <ul className="flex flex-col gap-2 list-disc ml-8">
+          <li>
+            <Link href="/my/posts">My posts</Link>
+          </li>
+        </ul>
         <p>[user: {user?.uid ?? "none"}]</p>
         <AuthForm />
       </VStack>
