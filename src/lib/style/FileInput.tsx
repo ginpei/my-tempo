@@ -22,6 +22,8 @@ export function FileInput({
     }
 
     onChange(Array.from(files));
+
+    // TODO fire again if the same file is selected again
   };
 
   return (
