@@ -3,6 +3,7 @@ import { auth } from "../../lib/firebase/instances";
 import { Container } from "../../lib/layout/Container";
 import { VStack } from "../../lib/layout/VStack";
 import { H1 } from "../../lib/style/H1";
+import { MyPhotoSection } from "./MyPhotoSection";
 import { MyProfileSection } from "./MyProfileSection";
 
 export function MyPage(): JSX.Element {
@@ -18,6 +19,7 @@ export function MyPage(): JSX.Element {
         <VStack>
           <H1>MyPage</H1>
           <MyProfileSection userId={user.uid} />
+          <MyPhotoSection userId={user.uid} />
         </VStack>
       </Container>
     </div>

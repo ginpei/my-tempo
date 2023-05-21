@@ -1,6 +1,7 @@
 import { FirebaseOptions, initializeApp } from "firebase/app";
-import { getAuth, connectAuthEmulator } from "firebase/auth";
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { connectAuthEmulator, getAuth } from "firebase/auth";
+import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
+import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 const apiKey = process.env["NEXT_PUBLIC_FIREBASE_API_KEY"];
 if (!apiKey || apiKey === "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx") {
@@ -22,6 +23,7 @@ const config: FirebaseOptions = {
 const app = initializeApp(config);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 const usingRealFb = process.env["NEXT_PUBLIC_FIREBASE_USE_REAL"];
 if (!usingRealFb) {
@@ -33,4 +35,5 @@ if (!usingRealFb) {
 function initializeEmulators() {
   connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true });
   connectFirestoreEmulator(db, "127.0.0.1", 8080);
+  connectStorageEmulator(storage, "localhost", 9199);
 }
