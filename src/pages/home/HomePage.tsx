@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { AuthForm } from "../../lib/auth/AuthForm";
+import { VStack } from "../../lib/layout/VStack";
 
 export interface HomePageProps {
 }
@@ -12,7 +14,10 @@ export function HomePage({}: HomePageProps): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-3xl font-bold">My Tempo</h1>
+      <VStack>
+        <h1 className="text-3xl font-bold">My Tempo</h1>
+        <AuthForm />
+      </VStack>
     </div>
   );
 }
