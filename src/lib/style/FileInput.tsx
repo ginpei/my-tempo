@@ -1,4 +1,5 @@
 import { ChangeEventHandler, PointerEventHandler } from "react";
+import { controlStyleClasses } from "./controls";
 
 export interface FileInputProps {
   accept?: string;
@@ -30,18 +31,7 @@ export function FileInput({
   };
 
   return (
-    <label
-      className={`
-        FileInput
-        flex items-center
-        border px-2 h-8
-        border-gray-300 rounded-sm
-        [&:hover:not(:has(:disabled))]:bg-gray-50
-        [&:has(:focus-visible)]:bg-gray-50 [&:has(:focus-visible)]:outline-none [&:has(:focus-visible)]:ring-2 [&:has(:focus-visible)]:ring-gray-300
-        active:bg-gray-200
-        [&:has(:disabled)]:text-gray-400 [&:has(:disabled)]:bg-gray-200 [&:has(:disabled)]:cursor-default
-      `}
-    >
+    <label className={`FileInput flex items-center h-8 ${controlStyleClasses}`}>
       {label}
       <input
         accept={accept}
