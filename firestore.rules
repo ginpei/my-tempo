@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // user private settings
+    match /users/{userId} {
+      allow create: if isAuthUid(userId);
+      allow read: if isAuthUid(userId);
+      allow update: if isAuthUid(userId);
+      allow delete: if isAuthUid(userId);
+    }
+
+    // user public profiles
+    match /profiles/{userId} {
+      allow create: if isAuthUid(userId);
+      allow read: if true;
+      allow update: if isAuthUid(userId);
+      allow delete: if isAuthUid(userId);
+    }
+
+    // public posts
+    match /posts/{postId} {
+      allow create: if isAuthUid(request.resource.data.userId);
+      allow read: if true;
+      allow update: if isAuthUid(resource.data.userId) && isAuthUid(request.resource.data.userId);
+      allow delete: if isAuthUid(resource.data.userId);
+    }
+
+    function isAuthUid(uid) {
+      return request.auth.uid == uid;
+    }
+  }
+}
