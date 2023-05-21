@@ -1,6 +1,7 @@
 import {
   DocumentData,
   DocumentSnapshot,
+  Timestamp,
   serverTimestamp,
 } from "firebase/firestore";
 import { DataRecord } from "./DataRecord";
@@ -9,7 +10,8 @@ export function toDocumentData<T extends DataRecord>(data: T): DocumentData {
   const { createdAt, id, ...fields } = data;
   return {
     ...fields,
-    createdAt: createdAt === 0 ? serverTimestamp() : createdAt,
+    createdAt:
+      createdAt === 0 ? serverTimestamp() : Timestamp.fromMillis(createdAt),
   };
 }
 
