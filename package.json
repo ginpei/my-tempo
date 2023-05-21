@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "firebase emulators:exec --ui 'next dev'",
     "format": "eslint --fix .",
     "lint": "next lint && npx tsc --project tsconfig.json",
     "start": "next start"
