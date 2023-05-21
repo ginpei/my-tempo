@@ -4,8 +4,6 @@ import { useCurrentUser } from "../../lib/auth/currentUserHooks";
 import { auth } from "../../lib/firebase/instances";
 import { VStack } from "../../lib/layout/VStack";
 
-export interface HomePageProps {}
-
 // to access localStorage in rendering
 const AuthForm = dynamic(
   () => import("../../lib/auth/AuthForm").then((mod) => mod.AuthForm),
@@ -14,7 +12,7 @@ const AuthForm = dynamic(
   }
 );
 
-export function HomePage({}: HomePageProps): JSX.Element {
+export function HomePage(): JSX.Element {
   const [user] = useCurrentUser(auth);
 
   return (

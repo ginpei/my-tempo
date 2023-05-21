@@ -14,9 +14,7 @@ import { auth } from "../firebase/instances";
 import { VStack } from "../layout/VStack";
 import { Button } from "../style/Button";
 
-export interface AuthFormProps {}
-
-export function AuthForm({}: AuthFormProps): JSX.Element {
+export function AuthForm(): JSX.Element {
   const [currentUser, currentUserError] = useCurrentUser(auth);
   const [signingIn, setSigningIn] = useState(false); // or signing out
   const [signingInError, setSigningInError] = useState<Error | null>(null);

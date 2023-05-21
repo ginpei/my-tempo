@@ -10,6 +10,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
   ],
+  ignorePatterns: ["functions/"],
   overrides: [],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -19,5 +20,6 @@ module.exports = {
   plugins: ["react", "@typescript-eslint", "prettier"],
   rules: {
     "prettier/prettier": "error",
+    "react/react-in-jsx-scope": "off",
   },
 };
