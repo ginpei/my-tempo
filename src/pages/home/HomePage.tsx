@@ -28,6 +28,9 @@ export function HomePage(): JSX.Element {
         <h1 className="text-3xl font-bold">My Tempo</h1>
         <ul className="flex flex-col gap-2 list-disc ml-8">
           <li>
+            <Link href="/my">My page</Link>
+          </li>
+          <li>
             <Link href="/my/posts">My posts</Link>
           </li>
         </ul>
