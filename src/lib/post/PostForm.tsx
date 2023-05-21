@@ -3,6 +3,7 @@ import { TextArea } from "../style/TextArea";
 import { Post } from "./Post";
 import { VStack } from "../layout/VStack";
 import { Button } from "../style/Button";
+import { FileInput } from "../style/FileInput";
 
 export interface PostFormProps {
   disabled?: boolean;
@@ -31,11 +32,16 @@ export function PostForm({
     }
   };
 
+  const onFileChange = (files: File[]) => {
+    console.log("# files", files);
+  };
+
   return (
     <form className="PostForm" onSubmit={onFormSubmit}>
       <fieldset disabled={disabled}>
         <VStack>
           <TextArea name="body" onChange={onFormChange} value={post.body} />
+          <FileInput accept="image/*" onChange={onFileChange} />
           <Button>Save</Button>
         </VStack>
       </fieldset>
