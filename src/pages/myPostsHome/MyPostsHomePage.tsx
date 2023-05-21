@@ -19,7 +19,7 @@ export function MyPostHomePage(): JSX.Element {
         <VStack>
           <H1>My posts</H1>
           <NewPostSection userId={user.uid} />
-          <PostsSection />
+          <PostsSection userId={user.uid} />
         </VStack>
       </Container>
     </div>
