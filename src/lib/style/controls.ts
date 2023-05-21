@@ -1,4 +1,4 @@
-export const controlStyleClasses = `
+export const controlNoHeightStyleClasses = `
   border px-2
   border-gray-300 rounded-sm
   [&:hover:not(:where(:disabled,:has(:disabled)))]:bg-gray-50
@@ -6,3 +6,5 @@ export const controlStyleClasses = `
   [&:is(:active,:has(:active))]:bg-gray-200
   [&:is(:disabled,:has(:disabled))]:text-gray-400 [&:is(:disabled,:has(:disabled))]:bg-gray-200 [&:is(:disabled,:has(:disabled))]:cursor-default
 `;
+
+export const controlStyleClasses = `h-8 ${controlNoHeightStyleClasses}`;

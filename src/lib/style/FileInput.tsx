@@ -31,7 +31,7 @@ export function FileInput({
   };
 
   return (
-    <label className={`FileInput flex items-center h-8 ${controlStyleClasses}`}>
+    <label className={`FileInput flex items-center ${controlStyleClasses}`}>
       {label}
       <input
         accept={accept}
