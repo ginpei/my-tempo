@@ -1,13 +1,20 @@
-import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
-import { useState } from 'react';
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+import { useState } from "react";
 import { useCurrentUser } from "../../lib/auth/currentUserHooks";
-import { toError } from '../error/misc';
+import { toError } from "../error/misc";
 import { auth } from "../firebase/instances";
 import { VStack } from "../layout/VStack";
 import { Button } from "../style/Button";
 
-export interface AuthFormProps {
-}
+export interface AuthFormProps {}
 
 export function AuthForm({}: AuthFormProps): JSX.Element {
   const [currentUser, currentUserError] = useCurrentUser(auth);
@@ -28,11 +35,11 @@ export function AuthForm({}: AuthFormProps): JSX.Element {
     } finally {
       setSigningIn(false);
     }
-  }
+  };
 
   const onEmailClick = async () => {
     trySigningIn(async () => {
-      const email = prompt('Email', 'user1@example.com');
+      const email = prompt("Email", "user1@example.com");
       if (!email) {
         return;
       }
@@ -41,14 +48,14 @@ export function AuthForm({}: AuthFormProps): JSX.Element {
 
       // create user if not exists
       if (methods.length === 0) {
-        const password = prompt('Password to create your account', 'pass123');
+        const password = prompt("Password to create your account", "pass123");
         if (!password) {
           return;
         }
         return createUserWithEmailAndPassword(auth, email, password);
       }
 
-      const password = prompt(`Password for ${email}`, 'pass123');
+      const password = prompt(`Password for ${email}`, "pass123");
       if (!password) {
         return;
       }
@@ -56,7 +63,7 @@ export function AuthForm({}: AuthFormProps): JSX.Element {
       return signInWithEmailAndPassword(auth, email, password);
     });
   };
-  
+
   const onGoogleClick = async () => {
     const provider = new GoogleAuthProvider();
     trySigningIn(() => signInWithPopup(auth, provider));
@@ -76,9 +83,7 @@ export function AuthForm({}: AuthFormProps): JSX.Element {
   return (
     <fieldset className="AuthForm w-96 mx-auto" disabled={signingIn}>
       <VStack>
-        {error && (
-          <p className="text-red-500">{error.message}</p>
-        )}
+        {error && <p className="text-red-500">{error.message}</p>}
         {currentUser ? (
           <Button onClick={onSignOutClick}>Sign out</Button>
         ) : (

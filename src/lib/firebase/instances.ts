@@ -3,10 +3,7 @@ import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
-if (
-  !apiKey ||
-    apiKey === "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-) {
+if (!apiKey || apiKey === "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx") {
   throw new Error("Invalid Firebase API Key. (Did you set `.env`?`)");
 }
 

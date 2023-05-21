@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 type Working = undefined;
 const working = undefined;
 
-export function useCurrentUser(auth: Auth): [User | Working | null, Error | null] {
+export function useCurrentUser(
+  auth: Auth
+): [User | Working | null, Error | null] {
   const [user, setUser] = useState<User | Working | null>(working);
   const [error, setError] = useState<Error | null>(null);
 
