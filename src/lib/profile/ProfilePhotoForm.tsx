@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FormEventHandler } from "react";
 import { VStack } from "../layout/VStack";
 import { Button } from "../style/Button";
-import { FileInput } from "../style/FileInput";
+import { FileButton } from "../style/FileButton";
 import { VInputField } from "../style/VInputField";
 
 export interface ProfilePhotoFormProps {
@@ -33,7 +33,9 @@ export function ProfilePhotoForm({
       <fieldset disabled={disabled}>
         <VStack>
           <VInputField label="Photo">
-            <FileInput accept="image/*" onChange={onFormChange} />
+            <FileButton accept="image/*" onChange={onFormChange}>
+              Choose...
+            </FileButton>
           </VInputField>
           {photo && (
             <div>

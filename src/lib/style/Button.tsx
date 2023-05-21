@@ -1,12 +1,16 @@
 import { ComponentPropsWithRef } from "react";
 import { controlStyleClasses } from "./controls";
 
-export type ButtonProps = ComponentPropsWithRef<"button">;
+export type ButtonProps = Omit<ComponentPropsWithRef<"button">, "className">;
 
-export function Button({ className, ...props }: ButtonProps): JSX.Element {
+export function Button(props: ButtonProps): JSX.Element {
   return (
     <button
-      className={`Button ${className ?? ""} ${controlStyleClasses} bg-gray-100`}
+      className={`
+        Button
+        bg-gray-100 text-gray-900
+        ${controlStyleClasses}
+      `}
       {...props}
     />
   );

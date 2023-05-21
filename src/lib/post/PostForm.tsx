@@ -1,9 +1,9 @@
 import { ChangeEventHandler, FormEventHandler } from "react";
-import { TextArea } from "../style/TextArea";
-import { Post } from "./Post";
 import { VStack } from "../layout/VStack";
 import { Button } from "../style/Button";
-import { FileInput } from "../style/FileInput";
+import { FileButton } from "../style/FileButton";
+import { TextArea } from "../style/TextArea";
+import { Post } from "./Post";
 
 export interface PostFormProps {
   disabled?: boolean;
@@ -49,7 +49,9 @@ export function PostForm({
         <VStack>
           <TextArea name="body" onChange={onFormChange} value={post.body} />
           <div className="flex gap-4 [&>*]:flex-1">
-            <FileInput accept="image/*" multiple onChange={onFileChange} />
+            <FileButton accept="image/*" multiple onChange={onFileChange}>
+              Add Images...
+            </FileButton>
             <Button>Save</Button>
           </div>
         </VStack>

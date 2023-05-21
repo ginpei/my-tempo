@@ -1,10 +1,8 @@
 import { ChangeEventHandler, PointerEventHandler } from "react";
-import { controlStyleClasses } from "./controls";
 
 export interface FileInputProps {
   accept?: string;
   disabled?: boolean;
-  label?: string;
   multiple?: boolean;
   onChange: (files: File[]) => void;
 }
@@ -12,7 +10,6 @@ export interface FileInputProps {
 export function FileInput({
   accept,
   disabled,
-  label = "File...",
   multiple,
   onChange,
 }: FileInputProps): JSX.Element {
@@ -31,17 +28,14 @@ export function FileInput({
   };
 
   return (
-    <label className={`FileInput flex items-center ${controlStyleClasses}`}>
-      {label}
-      <input
-        accept={accept}
-        disabled={disabled}
-        className="w-0 h-0"
-        multiple={multiple}
-        onClick={onInputClick}
-        onChange={onInputChange}
-        type="file"
-      />
-    </label>
+    <input
+      accept={accept}
+      disabled={disabled}
+      className="FileInput w-0 h-0"
+      multiple={multiple}
+      onClick={onInputClick}
+      onChange={onInputChange}
+      type="file"
+    />
   );
 }
