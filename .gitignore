@@ -36,7 +36,9 @@ yarn-error.log*
 next-env.d.ts
 
 # Firebase
+.firebase-export/
 .firebaserc
 firebase-debug.log
+firebase-export-*/
 firestore-debug.log
 ui-debug.log
