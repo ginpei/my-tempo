@@ -1,6 +1,9 @@
-import { ElementProps } from "../dom/types";
+import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
-export type ButtonProps = ElementProps<HTMLButtonElement>;
+export type ButtonProps = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
 
 export function Button({ className, ...props }: ButtonProps): JSX.Element {
   return (

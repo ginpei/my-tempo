@@ -1,6 +1,9 @@
-import { ElementProps } from "../dom/types";
+import { DetailedHTMLProps, HTMLAttributes } from "react";
 
-export type HeadingProps = ElementProps<HTMLHeadingElement>;
+export type HeadingProps = DetailedHTMLProps<
+  HTMLAttributes<HTMLHeadingElement>,
+  HTMLHeadingElement
+>;
 
 export function H1({ className, ...props }: HeadingProps): JSX.Element {
   return (
