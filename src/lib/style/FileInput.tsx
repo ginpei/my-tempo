@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, PointerEventHandler } from "react";
 
 export interface FileInputProps {
   accept?: string;
@@ -15,6 +15,11 @@ export function FileInput({
   multiple,
   onChange,
 }: FileInputProps): JSX.Element {
+  const onInputClick: PointerEventHandler<HTMLInputElement> = (event) => {
+    // clear selection once so that user can select the same file again
+    event.currentTarget.value = "";
+  };
+
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { files } = event.target;
     if (files === null) {
@@ -22,8 +27,6 @@ export function FileInput({
     }
 
     onChange(Array.from(files));
-
-    // TODO fire again if the same file is selected again
   };
 
   return (
@@ -45,6 +48,7 @@ export function FileInput({
         disabled={disabled}
         className="w-0 h-0"
         multiple={multiple}
+        onClick={onInputClick}
         onChange={onInputChange}
         type="file"
       />
