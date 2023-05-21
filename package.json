@@ -6,7 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "format": "eslint --fix .",
-    "lint": "next lint",
+    "lint": "next lint && npx tsc --project tsconfig.json",
     "start": "next start"
   },
   "dependencies": {
