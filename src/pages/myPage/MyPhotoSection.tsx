@@ -39,11 +39,10 @@ export function MyPhotoSection({ userId }: MyPhotoSectionProps): JSX.Element {
   };
 
   const onFormChange = async (file: File | null) => {
-    setPhoto(null);
     setError(null);
 
     try {
-      if (!file || !file.type.startsWith("image/")) {
+      if (file && !file.type.startsWith("image/")) {
         throw new Error("Image file is required");
       }
       setPhoto(file);

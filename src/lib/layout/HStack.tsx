@@ -8,6 +8,8 @@ export function HStack({
 }: StackProps): JSX.Element {
   const Element = as;
   return (
-    <Element className={`HStack ${className} flex ${gap}`}>{children}</Element>
+    <Element className={`HStack ${className} flex items-center ${gap}`}>
+      {children}
+    </Element>
   );
 }
