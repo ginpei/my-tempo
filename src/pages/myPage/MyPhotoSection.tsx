@@ -6,7 +6,7 @@ import { Working } from "../../lib/misc";
 import { Profile } from "../../lib/profile/Profile";
 import { ProfilePhotoForm } from "../../lib/profile/ProfilePhotoForm";
 import { saveProfile } from "../../lib/profile/profileDb";
-import { useProfile } from "../../lib/profile/profileHooks";
+import { useRealtimeProfile } from "../../lib/profile/profileHooks";
 import { uploadProfilePhoto } from "../../lib/profile/profilePhoto";
 import { H2 } from "../../lib/style/H2";
 
@@ -15,7 +15,7 @@ export interface MyPhotoSectionProps {
 }
 
 export function MyPhotoSection({ userId }: MyPhotoSectionProps): JSX.Element {
-  const [profile] = useProfile(db, userId);
+  const [profile] = useRealtimeProfile(db, userId);
   const [photo, setPhoto] = useState<File | Working | null>(Working);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -34,6 +34,7 @@ export function MyPhotoSection({ userId }: MyPhotoSectionProps): JSX.Element {
     try {
       const url = await uploadProfilePhoto(storage, profile.id, photo);
       await saveProfile(db, { ...profile, photoUrl: url });
+      setPhoto(Working);
     } catch (error) {
       console.error(error);
       setError(toError(error));
