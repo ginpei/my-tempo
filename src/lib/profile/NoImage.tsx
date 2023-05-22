@@ -1,8 +1,12 @@
 export interface NoImageProps {
+  text?: string;
   width: number | string;
 }
 
-export function NoImage({ width }: NoImageProps): JSX.Element {
+export function NoImage({
+  text = "No Image",
+  width,
+}: NoImageProps): JSX.Element {
   return (
     <svg
       height={width}
@@ -26,7 +30,7 @@ export function NoImage({ width }: NoImageProps): JSX.Element {
         x="50%"
         y="50%"
       >
-        No Image
+        {text}
       </text>
     </svg>
   );

@@ -5,23 +5,24 @@ import { VStack } from "../layout/VStack";
 import { Button } from "../style/Button";
 import { FileButton } from "../style/FileButton";
 import { NoImage } from "./NoImage";
+import { Working } from "../misc";
 
 export interface ProfilePhotoFormProps {
   disabled?: boolean;
   onChange?: (photo: File | null) => void;
-  onSubmit?: (photo: File | null) => void;
-  photo: File | null;
+  onSubmit?: () => void;
+  photoUrl: string | Working;
 }
 
 export function ProfilePhotoForm({
   disabled,
   onChange,
   onSubmit,
-  photo,
+  photoUrl,
 }: ProfilePhotoFormProps): JSX.Element {
   const onFormSubmit: FormEventHandler = (event) => {
     event.preventDefault();
-    onSubmit?.(photo);
+    onSubmit?.();
   };
 
   const onFormChange = (files: File[] | null) => {
@@ -37,11 +38,13 @@ export function ProfilePhotoForm({
     <form className="ProfilePhotoForm" onSubmit={onFormSubmit}>
       <fieldset disabled={disabled}>
         <VStack>
-          {photo ? (
+          {photoUrl === Working ? (
+            <span className="inline-block w-32 h-32" />
+          ) : photoUrl ? (
             <Image
-              alt={photo.name}
+              alt=""
               className="w-32 h-32 border object-contain bg-gray-50"
-              src={URL.createObjectURL(photo)}
+              src={photoUrl}
               width={128}
               height={128}
             />
@@ -52,7 +55,7 @@ export function ProfilePhotoForm({
             <FileButton accept="image/*" onChange={onFormChange}>
               Choose...
             </FileButton>
-            <Button disabled={!photo} onClick={onRemoveClick} type="button">
+            <Button disabled={!photoUrl} onClick={onRemoveClick} type="button">
               Remove
             </Button>
             <small>(* 128x128, &lt;5MB)</small>

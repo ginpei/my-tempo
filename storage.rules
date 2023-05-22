@@ -8,6 +8,7 @@ service firebase.storage {
 
       match /photo {
         allow write: if isAuthUid(userId) && isLtMb(5);
+        allow delete: if isAuthUid(userId);
       }
     }
 
