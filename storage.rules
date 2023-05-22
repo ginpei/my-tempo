@@ -3,10 +3,10 @@ service firebase.storage {
   match /b/{bucket}/o {
     match /users/{userId} {
       match /{allPaths=**} {
-        allow read: if true;
       }
 
       match /photo {
+        allow read: if true;
         allow write: if isAuthUid(userId) && isLtMb(5);
         allow delete: if isAuthUid(userId);
       }
