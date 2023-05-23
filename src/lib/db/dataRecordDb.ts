@@ -23,7 +23,7 @@ export function ssToDataRecord<T extends DataRecord>(ss: DocumentSnapshot): T {
 
   return {
     ...data,
-    createdAt: data["createdAt"].toMillis(),
+    createdAt: data["createdAt"]?.toMillis() ?? NaN,
     id: ss.id,
   } as T;
 }

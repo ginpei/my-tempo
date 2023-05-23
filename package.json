@@ -5,6 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "firebase emulators:exec --import .firebase-export --export-on-exit --ui 'next dev'",
+    "dev-real": "NEXT_PUBLIC_FIREBASE_USE_REAL=1 npx next dev",
     "firebase-clean": "rmdir firebase-export-*",
     "firebase-export": "firebase emulators:export .firebase-export",
     "format": "eslint --fix .",
