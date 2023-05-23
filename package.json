@@ -10,7 +10,8 @@
     "firebase-export": "firebase emulators:export .firebase-export",
     "format": "eslint --fix .",
     "lint": "next lint && npx tsc --project tsconfig.json",
-    "start": "next start"
+    "start": "next start",
+    "test": "echo OK"
   },
   "dependencies": {
     "firebase": "^9.22.0",
