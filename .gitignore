@@ -37,6 +37,7 @@ next-env.d.ts
 
 # Firebase
 .firebase-export/
+.firebase/
 .firebaserc
 firebase-debug.log
 firebase-export-*/
