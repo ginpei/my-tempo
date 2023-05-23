@@ -41,7 +41,10 @@ export function MyProfileSection({
     setSaving(true);
 
     try {
-      await Promise.all([saveProfile(db, profile), sleep(1000)]);
+      await Promise.all([
+        saveProfile(db, { ...profile, id: userId }),
+        sleep(1000),
+      ]);
     } catch (error) {
       console.error(error);
       setError(toError(error));
