@@ -17,3 +17,4 @@ jobs:
           projectId: fir-c4868
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
+          NEXT_PUBLIC_FIREBASE_USE_REAL: 1
