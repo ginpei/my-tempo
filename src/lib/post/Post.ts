@@ -5,6 +5,11 @@ export interface Post extends DataRecord {
   userId: string;
 }
 
+/**
+ * Image that user selected to upload in the form.
+ */
+export type UploadImageData = { file: File; id: string };
+
 export function createPost(init: Partial<Post> = {}): Post {
   return {
     ...createDataRecord(init),

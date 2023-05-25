@@ -3,20 +3,23 @@ import { VStack } from "../layout/VStack";
 import { Button } from "../style/Button";
 import { FileButton } from "../style/FileButton";
 import { TextArea } from "../style/TextArea";
-import { Post } from "./Post";
+import { ImageFilePreview } from "./ImageFilePreview";
+import { Post, UploadImageData } from "./Post";
 
 export interface PostFormProps {
   disabled?: boolean;
+  images: UploadImageData[];
   onChange?: (post: Post) => void;
-  onImagesSelect?: (files: File[]) => void;
+  onImagesChange?: (files: UploadImageData[]) => void;
   onSubmit?: (post: Post) => void;
   post: Post;
 }
 
 export function PostForm({
   disabled,
+  images,
   onChange,
-  onImagesSelect,
+  onImagesChange,
   onSubmit,
   post,
 }: PostFormProps): JSX.Element {
@@ -40,7 +43,19 @@ export function PostForm({
       return;
     }
 
-    onImagesSelect?.(imageFiles);
+    const newImages = [
+      ...images,
+      ...files.map((file) => ({
+        file,
+        id: window.crypto.randomUUID(),
+      })),
+    ];
+    onImagesChange?.(newImages);
+  };
+
+  const onImageRemoveClick = (id: string) => {
+    const newImages = images.filter((image) => image.id !== id);
+    onImagesChange?.(newImages);
   };
 
   return (
@@ -53,6 +68,16 @@ export function PostForm({
               Add Images...
             </FileButton>
             <Button>Save</Button>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            {images.map(({ file, id }) => (
+              <ImageFilePreview
+                file={file}
+                key={id}
+                id={id}
+                onRemoveClick={onImageRemoveClick}
+              />
+            ))}
           </div>
         </VStack>
       </fieldset>
