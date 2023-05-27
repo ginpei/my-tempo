@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { toError } from "../../lib/error/misc";
+import { isImageLtMb } from "../../lib/file/file";
 import { VStack } from "../../lib/layout/VStack";
-import { createPost, Post, UploadImageData } from "../../lib/post/Post";
+import {
+  createPost,
+  isValidPostDraft,
+  Post,
+  UploadImageData,
+} from "../../lib/post/Post";
 import { savePost } from "../../lib/post/postDb";
 import { PostForm } from "../../lib/post/PostForm";
-import { H2 } from "../../lib/style/H2";
 import { uploadPostImage } from "../../lib/post/postStorage";
-import { isImageLtMb } from "../../lib/file/file";
+import { H2 } from "../../lib/style/H2";
 
 export interface NewPostSectionProps {
   userId: string;
@@ -34,6 +39,11 @@ export function NewPostSection({
     setPostError(null);
     setWorking(true);
     try {
+      // this should not happen because submit button becomes disabled
+      if (!isValidPostDraft(post, images.length)) {
+        throw new Error("Invalid post");
+      }
+
       if (!images.every(({ file }) => isImageLtMb(file, 5))) {
         throw new Error("Image must be less than 5MB");
       }

@@ -20,14 +20,27 @@ service cloud.firestore {
 
     // public posts
     match /posts/{postId} {
-      allow create: if isAuthUid(request.resource.data.userId);
+      allow create: if
+        isAuthUid(request.resource.data.userId) &&
+        isValidPost(request.resource.data);
       allow read: if true;
       allow update: if isAuthUid(resource.data.userId) && isAuthUid(request.resource.data.userId);
       allow delete: if isAuthUid(resource.data.userId);
+
+      function isValidPost(data) {
+        return
+          !isEmpty(data.userId) &&
+          (!isEmpty(data.body) ||
+            (0 < data.images.size() && data.images.size() <= 4));
+      }
     }
 
     function isAuthUid(uid) {
       return request.auth.uid == uid;
+    }
+
+    function isEmpty(value) {
+      return value == null || value == "";
     }
   }
 }

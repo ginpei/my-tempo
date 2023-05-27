@@ -4,7 +4,7 @@ import { Button } from "../style/Button";
 import { FileButton } from "../style/FileButton";
 import { TextArea } from "../style/TextArea";
 import { ImageFilePreview } from "./ImageFilePreview";
-import { Post, UploadImageData } from "./Post";
+import { Post, UploadImageData, isValidPostDraft, maxNumImages } from "./Post";
 
 export interface PostFormProps {
   disabled?: boolean;
@@ -66,8 +66,19 @@ export function PostForm({
           <div className="flex gap-4 [&>*]:flex-1">
             <FileButton accept="image/*" multiple onChange={onFileChange}>
               Add Images...
+              <small>
+                (
+                <span
+                  className={images.length > maxNumImages ? "text-red-500" : ""}
+                >
+                  {images.length}
+                </span>
+                /{maxNumImages})
+              </small>
             </FileButton>
-            <Button>Save</Button>
+            <Button disabled={!isValidPostDraft(post, images.length)}>
+              Save
+            </Button>
           </div>
           <div className="flex flex-wrap gap-4">
             {images.map(({ file, id }) => (

@@ -15,6 +15,8 @@ export interface PostImageMetadata {
  */
 export type UploadImageData = { file: File; id: string };
 
+export const maxNumImages = 4;
+
 export function createPost(init: Partial<Post> = {}): Post {
   return {
     ...createDataRecord(init),
@@ -24,4 +26,8 @@ export function createPost(init: Partial<Post> = {}): Post {
     images: init.images ?? [],
     userId: init.userId ?? "",
   };
+}
+
+export function isValidPostDraft(post: Post, numImages: number): boolean {
+  return post.body !== "" || (0 < numImages && numImages <= maxNumImages);
 }
