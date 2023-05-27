@@ -62,6 +62,6 @@ export function postDoc(
   }
 
   const coll = collection(db, "posts");
-  const ref = doc(coll, postId);
+  const ref = postId ? doc(coll, postId) : doc(coll);
   return ref;
 }
