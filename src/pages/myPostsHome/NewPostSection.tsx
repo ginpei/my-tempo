@@ -51,9 +51,9 @@ export function NewPostSection({
 
       const resultPost = await savePost(db, { ...post, userId }, images);
 
+      const postId = resultPost.id;
       await Promise.all(
         images.map(({ file, id }) => {
-          const postId = resultPost.id;
           return uploadPostImage(userId, file, postId, id);
         })
       );
