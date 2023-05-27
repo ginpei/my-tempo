@@ -12,6 +12,7 @@ import { savePost } from "../../lib/post/postDb";
 import { PostForm } from "../../lib/post/PostForm";
 import { uploadPostImage } from "../../lib/post/postStorage";
 import { H2 } from "../../lib/style/H2";
+import { db } from "../../lib/firebase/instances";
 
 export interface NewPostSectionProps {
   userId: string;
@@ -48,7 +49,7 @@ export function NewPostSection({
         throw new Error("Image must be less than 5MB");
       }
 
-      const resultPost = await savePost({ ...post, userId }, images);
+      const resultPost = await savePost(db, { ...post, userId }, images);
 
       await Promise.all(
         images.map(({ file, id }) => {

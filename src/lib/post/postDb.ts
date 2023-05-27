@@ -12,7 +12,6 @@ import {
   where,
 } from "firebase/firestore";
 import { ssToDataRecord, toDocumentData } from "../db/dataRecordDb";
-import { db } from "../firebase/instances";
 import { Post, PostImageMetadata, UploadImageData } from "./Post";
 
 export function postToDocumentData(
@@ -30,6 +29,7 @@ export function ssToPost(ss: DocumentSnapshot): Post {
 }
 
 export async function savePost(
+  db: Firestore,
   post: Post,
   images: UploadImageData[] = []
 ): Promise<Post> {
@@ -47,7 +47,10 @@ export async function savePost(
   throw new Error(`WIP`);
 }
 
-export async function fetchUserPosts(userId: string): Promise<Post[]> {
+export async function fetchUserPosts(
+  db: Firestore,
+  userId: string
+): Promise<Post[]> {
   const coll = postCollection(db);
   const q = query(
     coll,

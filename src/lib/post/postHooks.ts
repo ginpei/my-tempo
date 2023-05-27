@@ -1,10 +1,12 @@
+import { Firestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { toError } from "../error/misc";
 import { Working } from "../misc";
 import { Post } from "./Post";
 import { fetchUserPosts } from "./postDb";
-import { toError } from "../error/misc";
 
 export function useUserPosts(
+  db: Firestore,
   userId: string,
   updatedAt: number
 ): [Post[] | Working, Error | null] {
@@ -17,7 +19,7 @@ export function useUserPosts(
     setError(null);
     setLastUpdatedAt(updatedAt);
 
-    fetchUserPosts(userId)
+    fetchUserPosts(db, userId)
       .then((posts) => {
         setPosts(posts);
       })
@@ -26,7 +28,7 @@ export function useUserPosts(
         setPosts([]);
         setError(toError(err));
       });
-  }, [updatedAt, userId]);
+  }, [db, updatedAt, userId]);
 
   return [posts, error];
 }

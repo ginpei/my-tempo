@@ -1,3 +1,4 @@
+import { db } from "../../lib/firebase/instances";
 import { VStack } from "../../lib/layout/VStack";
 import { Working } from "../../lib/misc";
 import { PostItem } from "../../lib/post/PostItem";
@@ -13,7 +14,7 @@ export function PostsSection({
   userId,
   updatedAt,
 }: PostsSectionProps): JSX.Element {
-  const [posts, postError] = useUserPosts(userId, updatedAt);
+  const [posts, postError] = useUserPosts(db, userId, updatedAt);
 
   return (
     <VStack as="article" className="PostsSection">
