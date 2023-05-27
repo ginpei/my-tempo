@@ -1,18 +1,11 @@
 import { useState } from "react";
 import { toError } from "../../lib/error/misc";
-import { isImageLtMb } from "../../lib/file/file";
+import { db, storage } from "../../lib/firebase/instances";
 import { VStack } from "../../lib/layout/VStack";
-import {
-  createPost,
-  isValidPostDraft,
-  Post,
-  UploadImageData,
-} from "../../lib/post/Post";
-import { savePost } from "../../lib/post/postDb";
+import { Post, UploadImageData, createPost } from "../../lib/post/Post";
 import { PostForm } from "../../lib/post/PostForm";
-import { uploadPostImage } from "../../lib/post/postStorage";
 import { H2 } from "../../lib/style/H2";
-import { db } from "../../lib/firebase/instances";
+import { createNewPost } from "./createNewPost";
 
 export interface NewPostSectionProps {
   userId: string;
@@ -40,30 +33,11 @@ export function NewPostSection({
     setPostError(null);
     setWorking(true);
     try {
-      // this should not happen because submit button becomes disabled
-      if (!isValidPostDraft(post, images.length)) {
-        throw new Error("Invalid post");
-      }
-
-      if (!images.every(({ file }) => isImageLtMb(file, 5))) {
-        throw new Error("Image must be less than 5MB");
-      }
-
-      const resultPost = await savePost(db, {
-        ...post,
-        images: images.map((_, i) => ({ id: String(i + 1) })),
-        userId,
-      });
-
-      const postId = resultPost.id;
-      await Promise.all(
-        images.map(({ file }, index) => {
-          return uploadPostImage(userId, file, postId, String(index + 1));
-        })
-      );
+      await createNewPost(db, storage, userId, post, images);
 
       setPost(createPost());
       setImages([]);
+
       onSubmit();
     } catch (error) {
       console.error(error);
