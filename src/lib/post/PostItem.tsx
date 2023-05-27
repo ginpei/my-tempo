@@ -1,3 +1,4 @@
+import { timeToString } from "../time/timePresentation";
 import { Post } from "./Post";
 import { PostImageItem } from "./PostImageItem";
 
@@ -20,7 +21,7 @@ export function PostItem({ post }: PostItemProps): JSX.Element {
         {/* TODO path */}
         <a className="hover:underline" href={`/posts/${post.id}`}>
           <time className="text-sm text-gray-400">
-            {new Date(post.createdAt).toISOString()}
+            {timeToString(post.createdAt)}
           </time>
         </a>
       </div>
