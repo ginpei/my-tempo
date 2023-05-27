@@ -4,13 +4,18 @@ import { Post } from "./Post";
 import { fetchUserPosts } from "./postDb";
 import { toError } from "../error/misc";
 
-export function useUserPosts(userId: string): [Post[] | Working, Error | null] {
+export function useUserPosts(
+  userId: string,
+  updatedAt: number
+): [Post[] | Working, Error | null] {
   const [posts, setPosts] = useState<Post[] | Working>(Working);
   const [error, setError] = useState<Error | null>(null);
+  const [, setLastUpdatedAt] = useState(updatedAt);
 
   useEffect(() => {
     setPosts(Working);
     setError(null);
+    setLastUpdatedAt(updatedAt);
 
     fetchUserPosts(userId)
       .then((posts) => {
@@ -21,7 +26,7 @@ export function useUserPosts(userId: string): [Post[] | Working, Error | null] {
         setPosts([]);
         setError(toError(err));
       });
-  }, [userId]);
+  }, [updatedAt, userId]);
 
   return [posts, error];
 }

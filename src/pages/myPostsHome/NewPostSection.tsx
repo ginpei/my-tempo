@@ -10,9 +10,13 @@ import { isImageLtMb } from "../../lib/file/file";
 
 export interface NewPostSectionProps {
   userId: string;
+  onSubmit: () => void;
 }
 
-export function NewPostSection({ userId }: NewPostSectionProps): JSX.Element {
+export function NewPostSection({
+  userId,
+  onSubmit,
+}: NewPostSectionProps): JSX.Element {
   const [post, setPost] = useState(createPost());
   const [working, setWorking] = useState(false);
   const [postError, setPostError] = useState<Error | null>(null);
@@ -42,6 +46,10 @@ export function NewPostSection({ userId }: NewPostSectionProps): JSX.Element {
           return uploadPostImage(file, postId, id);
         })
       );
+
+      setPost(createPost());
+      setImages([]);
+      onSubmit();
     } catch (error) {
       console.error(error);
       setPostError(toError(error));

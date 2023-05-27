@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useCurrentUser } from "../../lib/auth/currentUserHooks";
 import { auth } from "../../lib/firebase/instances";
 import { Container } from "../../lib/layout/Container";
@@ -8,6 +9,11 @@ import { PostsSection } from "./PostsSection";
 
 export function MyPostHomePage(): JSX.Element {
   const [user] = useCurrentUser(auth);
+  const [updatedAt, setUpdatedAt] = useState(Date.now());
+
+  const onPostSubmit = () => {
+    setUpdatedAt(Date.now());
+  };
 
   if (!user) {
     return <p>Not logged in</p>;
@@ -18,8 +24,8 @@ export function MyPostHomePage(): JSX.Element {
       <Container>
         <VStack>
           <H1>My posts</H1>
-          <NewPostSection userId={user.uid} />
-          <PostsSection userId={user.uid} />
+          <NewPostSection userId={user.uid} onSubmit={onPostSubmit} />
+          <PostsSection userId={user.uid} updatedAt={updatedAt} />
         </VStack>
       </Container>
     </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { VStack } from "../../lib/layout/VStack";
 import { Working } from "../../lib/misc";
@@ -5,14 +6,17 @@ import { PostImageMetadata } from "../../lib/post/Post";
 import { useUserPosts } from "../../lib/post/postHooks";
 import { getPostImageUrl } from "../../lib/post/postStorage";
 import { H2 } from "../../lib/style/H2";
-import Image from "next/image";
 
 export interface PostsSectionProps {
   userId: string;
+  updatedAt: number;
 }
 
-export function PostsSection({ userId }: PostsSectionProps): JSX.Element {
-  const [posts, postError] = useUserPosts(userId);
+export function PostsSection({
+  userId,
+  updatedAt,
+}: PostsSectionProps): JSX.Element {
+  const [posts, postError] = useUserPosts(userId, updatedAt);
 
   return (
     <VStack as="article" className="PostsSection">
