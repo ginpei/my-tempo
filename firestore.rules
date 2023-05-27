@@ -31,7 +31,7 @@ service cloud.firestore {
         return
           !isEmpty(data.userId) &&
           (!isEmpty(data.body) ||
-            (0 < data.images.size() && data.images.size() <= 4));
+            (1 <= data.images.size() && data.images.size() <= 4));
       }
     }
 
