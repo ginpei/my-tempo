@@ -14,8 +14,9 @@ service firebase.storage {
 
     match /posts/{postId}/{imageId} {
         allow read: if isPublic(resource);
-        allow write: if isPublic(request.resource);
-        // allow update: if isAuthUid(resource.metadata.userId) && isLtMb(5) && isImage();
+        allow create: if
+          isAuthUid(request.resource.metadata['userId']) &&
+          isImageMb(request.resource, 5);
     }
 
     function isAuthUid(uid) {

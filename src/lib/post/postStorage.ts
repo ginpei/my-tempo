@@ -4,7 +4,7 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { getSha512Hash, isImageLtMb } from "../file/file";
+import { isImageLtMb } from "../file/file";
 import { storage } from "../firebase/instances";
 
 export function getPostImageRef(postId: string, fileId: string) {
@@ -25,6 +25,7 @@ export async function getPostImageUrl(
 }
 
 export async function uploadPostImage(
+  userId: string,
   file: File,
   postId: string,
   fileId: string
@@ -36,7 +37,7 @@ export async function uploadPostImage(
   const metadata: UploadMetadata = {
     contentType: file.type,
     customMetadata: {
-      sha512: await getSha512Hash(file),
+      userId,
       visibility: "public",
     },
   };

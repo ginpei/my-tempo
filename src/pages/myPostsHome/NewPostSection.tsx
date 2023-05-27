@@ -54,7 +54,7 @@ export function NewPostSection({
       await Promise.all(
         images.map(({ file, id }) => {
           const postId = resultPost.id;
-          return uploadPostImage(file, postId, id);
+          return uploadPostImage(userId, file, postId, id);
         })
       );
 
