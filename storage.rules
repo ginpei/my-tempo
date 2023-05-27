@@ -7,7 +7,7 @@ service firebase.storage {
 
       match /photo {
         allow read: if true;
-        allow write: if isAuthUid(userId) && isImageMb(5);
+        allow write: if isAuthUid(userId) && isImageMb(request.resource, 5);
         allow delete: if isAuthUid(userId);
       }
     }
@@ -26,17 +26,17 @@ service firebase.storage {
       return res.metadata['visibility'] == 'public';
     }
 
-    function isImageMb(mb) {
-      return isImage() && isLtMb(mb);
+    function isImageMb(res, mb) {
+      return isImage(res) && isLtMb(res, mb);
     }
 
     // is the request file size less than in MB
-    function isLtMb(mb) {
-      return request.resource.size < mb * 1024 * 1024;
+    function isLtMb(res, mb) {
+      return res.size < mb * 1024 * 1024;
     }
 
-    function isImage() {
-      return request.resource.contentType.matches('image/.*');
+    function isImage(res) {
+      return res.contentType.matches('image/.*');
     }
   }
 }
