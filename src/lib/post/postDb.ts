@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   setDoc,
   where,
@@ -48,7 +49,11 @@ export async function savePost(
 
 export async function fetchUserPosts(userId: string): Promise<Post[]> {
   const coll = postCollection(db);
-  const q = query(coll, where("userId", "==", userId));
+  const q = query(
+    coll,
+    where("userId", "==", userId),
+    orderBy("createdAt", "desc")
+  );
   const ss = await getDocs(q);
   const posts = ss.docs.map((v) => ssToPost(v));
   return posts;
