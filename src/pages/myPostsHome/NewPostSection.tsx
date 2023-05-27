@@ -34,16 +34,12 @@ export function NewPostSection({ userId }: NewPostSectionProps): JSX.Element {
         throw new Error("Image must be less than 5MB");
       }
 
-      const dbResult = await savePost({
-        ...post,
-        userId,
-      });
+      const resultPost = await savePost({ ...post, userId }, images);
 
       await Promise.all(
-        images.map(({ file }) => {
-          const postId = dbResult.id;
-          const fileId = window.crypto.randomUUID();
-          return uploadPostImage(file, postId, fileId);
+        images.map(({ file, id }) => {
+          const postId = resultPost.id;
+          return uploadPostImage(file, postId, id);
         })
       );
     } catch (error) {
