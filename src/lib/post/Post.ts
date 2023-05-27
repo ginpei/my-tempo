@@ -8,6 +8,7 @@ export interface Post extends DataRecord {
 
 export interface PostImageMetadata {
   id: string;
+  url: string;
 }
 
 /**

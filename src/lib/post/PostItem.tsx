@@ -13,7 +13,7 @@ export function PostItem({ post }: PostItemProps): JSX.Element {
       {post.images.length > 0 && (
         <div className="flex items-center flex-wrap">
           {post.images.map((image) => (
-            <PostImageItem key={image.id} image={image} postId={post.id} />
+            <PostImageItem key={image.id} image={image} />
           ))}
         </div>
       )}

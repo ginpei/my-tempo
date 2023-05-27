@@ -1,8 +1,13 @@
 import { Firestore } from "firebase/firestore";
 import { FirebaseStorage } from "firebase/storage";
 import { isImageLtMb } from "../../lib/file/file";
-import { Post, UploadImageData, isValidPostDraft } from "../../lib/post/Post";
-import { savePost } from "../../lib/post/postDb";
+import {
+  Post,
+  PostImageMetadata,
+  UploadImageData,
+  isValidPostDraft,
+} from "../../lib/post/Post";
+import { postDoc, savePost } from "../../lib/post/postDb";
 import { uploadPostImage } from "../../lib/post/postStorage";
 
 export async function createNewPost(
@@ -21,18 +26,32 @@ export async function createNewPost(
     throw new Error("Image must be less than 5MB");
   }
 
-  const resultPost = await savePost(db, {
-    ...post,
-    images: images.map((_, i) => ({ id: String(i + 1) })),
-    userId,
-  });
+  const ref = postDoc(db, undefined);
+  const postId = ref.id;
 
-  const postId = resultPost.id;
-  await Promise.all(
+  const urls = await Promise.all(
     images.map(({ file }, index) => {
       return uploadPostImage(storage, userId, file, postId, String(index + 1));
     })
   );
+
+  const imagesWithUrl: PostImageMetadata[] = images.map((_image, index) => {
+    const url = urls[index];
+    if (url === undefined) {
+      throw new Error("Something went wrong (URL not found)");
+    }
+
+    return {
+      id: String(index + 1),
+      url,
+    };
+  });
+
+  const resultPost = await savePost(db, {
+    ...post,
+    images: imagesWithUrl,
+    userId,
+  });
 
   return resultPost;
 }
