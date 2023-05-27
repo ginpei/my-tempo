@@ -15,8 +15,13 @@ export async function getPostImageUrl(
   postId: string,
   fileId: string
 ): Promise<string> {
-  const refImage = getPostImageRef(postId, fileId);
-  return await getDownloadURL(refImage);
+  try {
+    const refImage = getPostImageRef(postId, fileId);
+    return await getDownloadURL(refImage);
+  } catch (error) {
+    console.error(error);
+    return "";
+  }
 }
 
 export async function uploadPostImage(

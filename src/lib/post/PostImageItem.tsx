@@ -3,6 +3,7 @@ import { Working } from "../misc";
 import { PostImageMetadata } from "./Post";
 import { getPostImageUrl } from "./postStorage";
 import Image from "next/image";
+import { NoImage } from "../profile/NoImage";
 
 export interface PostImageItemProps {
   image: PostImageMetadata;
@@ -21,7 +22,11 @@ export function PostImageItem({
 
   return (
     <span className="inline-block border w-60 h-60 bg-gray-50">
-      {src !== Working ? (
+      {src === Working ? (
+        "…"
+      ) : src === "" ? (
+        <NoImage width="100%" />
+      ) : (
         <Image
           alt=""
           className="inline-block object-contain w-full h-full"
@@ -29,8 +34,6 @@ export function PostImageItem({
           src={src}
           width={100}
         />
-      ) : (
-        "…"
       )}
     </span>
   );

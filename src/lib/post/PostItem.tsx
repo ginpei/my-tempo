@@ -10,7 +10,7 @@ export function PostItem({ post }: PostItemProps): JSX.Element {
     <div className="PostItem border">
       <div>{post.body}</div>
       {post.images.length > 0 && (
-        <div>
+        <div className="flex items-center flex-wrap">
           {post.images.map((image) => (
             <PostImageItem key={image.id} image={image} postId={post.id} />
           ))}
