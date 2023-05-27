@@ -1,4 +1,5 @@
 import {
+  DocumentReference,
   DocumentSnapshot,
   Firestore,
   collection,
@@ -21,8 +22,7 @@ export function ssToPost(ss: DocumentSnapshot): Post {
 
 export async function savePost(db: Firestore, post: Post): Promise<Post> {
   if (post.id === "") {
-    const coll = postCollection(db);
-    const ref = doc(coll);
+    const ref = postDoc(db, undefined);
 
     await setDoc(ref, postToDocumentData(post));
 
@@ -51,4 +51,17 @@ export async function fetchUserPosts(
 
 export function postCollection(db: Firestore) {
   return collection(db, "posts");
+}
+
+export function postDoc(
+  db: Firestore,
+  postId: string | undefined
+): DocumentReference {
+  if (postId === "") {
+    throw new Error("postId must not be an empty string");
+  }
+
+  const coll = collection(db, "posts");
+  const ref = doc(coll, postId);
+  return ref;
 }
