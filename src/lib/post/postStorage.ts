@@ -1,4 +1,5 @@
 import {
+  FirebaseStorage,
   UploadMetadata,
   getDownloadURL,
   ref,
@@ -7,16 +8,21 @@ import {
 import { isImageLtMb } from "../file/file";
 import { storage } from "../firebase/instances";
 
-export function getPostImageRef(postId: string, fileId: string) {
+export function getPostImageRef(
+  storage: FirebaseStorage,
+  postId: string,
+  fileId: string
+) {
   return ref(storage, `posts/${postId}/${fileId}`);
 }
 
+// TODO add storage in params
 export async function getPostImageUrl(
   postId: string,
   fileId: string
 ): Promise<string> {
   try {
-    const refImage = getPostImageRef(postId, fileId);
+    const refImage = getPostImageRef(storage, postId, fileId);
     return await getDownloadURL(refImage);
   } catch (error) {
     console.error(error);
@@ -25,6 +31,7 @@ export async function getPostImageUrl(
 }
 
 export async function uploadPostImage(
+  storage: FirebaseStorage,
   userId: string,
   file: File,
   postId: string,
@@ -42,7 +49,7 @@ export async function uploadPostImage(
     },
   };
 
-  const refFile = getPostImageRef(postId, fileId);
+  const refFile = getPostImageRef(storage, postId, fileId);
   const result = await uploadBytes(refFile, file, metadata);
 
   const url = await getDownloadURL(result.ref);

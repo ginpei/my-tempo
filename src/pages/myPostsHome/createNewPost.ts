@@ -30,7 +30,7 @@ export async function createNewPost(
   const postId = resultPost.id;
   await Promise.all(
     images.map(({ file }, index) => {
-      return uploadPostImage(userId, file, postId, String(index + 1));
+      return uploadPostImage(storage, userId, file, postId, String(index + 1));
     })
   );
 
