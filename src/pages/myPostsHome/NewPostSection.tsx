@@ -49,12 +49,16 @@ export function NewPostSection({
         throw new Error("Image must be less than 5MB");
       }
 
-      const resultPost = await savePost(db, { ...post, userId }, images);
+      const resultPost = await savePost(db, {
+        ...post,
+        images: images.map((_, i) => ({ id: String(i + 1) })),
+        userId,
+      });
 
       const postId = resultPost.id;
       await Promise.all(
-        images.map(({ file, id }) => {
-          return uploadPostImage(userId, file, postId, id);
+        images.map(({ file }, index) => {
+          return uploadPostImage(userId, file, postId, String(index + 1));
         })
       );
 

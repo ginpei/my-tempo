@@ -1,5 +1,4 @@
 import {
-  DocumentData,
   DocumentSnapshot,
   Firestore,
   collection,
@@ -12,32 +11,20 @@ import {
   where,
 } from "firebase/firestore";
 import { ssToDataRecord, toDocumentData } from "../db/dataRecordDb";
-import { Post, PostImageMetadata, UploadImageData } from "./Post";
+import { Post } from "./Post";
 
-export function postToDocumentData(
-  post: Post,
-  images: UploadImageData[]
-): DocumentData {
-  return toDocumentData({
-    ...post,
-    images: images.map((v): PostImageMetadata => ({ id: v.id })),
-  });
-}
+export const postToDocumentData = toDocumentData;
 
 export function ssToPost(ss: DocumentSnapshot): Post {
   return ssToDataRecord<Post>(ss);
 }
 
-export async function savePost(
-  db: Firestore,
-  post: Post,
-  images: UploadImageData[] = []
-): Promise<Post> {
+export async function savePost(db: Firestore, post: Post): Promise<Post> {
   if (post.id === "") {
     const coll = postCollection(db);
     const ref = doc(coll);
 
-    await setDoc(ref, postToDocumentData(post, images));
+    await setDoc(ref, postToDocumentData(post));
 
     const ss = await getDoc(ref);
     const newPost = ssToPost(ss);
